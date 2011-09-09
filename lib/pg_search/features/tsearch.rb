@@ -45,7 +45,7 @@ module PgSearch
           tsquery_sql = term_sql
 
           # Add tsearch prefix operator if we're using a prefix search.
-          tsquery_sql = "#{tsquery_sql} || #{connection.quote(':*')}" if @options[:prefix]
+          tsquery_sql = "#{tsquery_sql}#{connection.quote(':*')}" if @options[:prefix]
 
           "to_tsquery(:dictionary, #{tsquery_sql})"
         end.join(@options[:any_word] ? ' || ' : ' && ')
