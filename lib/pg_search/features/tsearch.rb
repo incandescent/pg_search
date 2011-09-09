@@ -37,7 +37,7 @@ module PgSearch
         @query.split(" ").compact.map do |term|
           sanitized_term = term.gsub(/['?\-\\:]/, " ")
 
-          term_sql = @normalizer.add_normalization(connection.quote(sanitized_term))
+          term_sql = @normalizer.add_normalization(sanitized_term)
 
           # After this, the SQL expression evaluates to a string containing the term surrounded by single-quotes.
           #tsquery_sql = "#{connection.quote("' ")} || #{term_sql} || #{connection.quote(" '")}"
