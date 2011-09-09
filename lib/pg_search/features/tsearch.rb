@@ -40,7 +40,9 @@ module PgSearch
           term_sql = @normalizer.add_normalization(connection.quote(sanitized_term))
 
           # After this, the SQL expression evaluates to a string containing the term surrounded by single-quotes.
-          tsquery_sql = "#{connection.quote("' ")} || #{term_sql} || #{connection.quote(" '")}"
+          #tsquery_sql = "#{connection.quote("' ")} || #{term_sql} || #{connection.quote(" '")}"
+
+          tsquery_sql = term_sql
 
           # Add tsearch prefix operator if we're using a prefix search.
           tsquery_sql = "#{tsquery_sql} || #{connection.quote(':*')}" if @options[:prefix]
@@ -55,7 +57,7 @@ module PgSearch
           search_column.weight.nil? ? tsvector : "setweight(#{tsvector}, #{connection.quote(search_column.weight)})"
         end.join(" || ")
       end
-      
+
       # From http://www.postgresql.org/docs/8.3/static/textsearch-controls.html
       #   0 (the default) ignores the document length
       #   1 divides the rank by 1 + the logarithm of the document length
