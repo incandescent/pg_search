@@ -45,7 +45,7 @@ module PgSearch
           tsquery_sql = term_sql
 
           if @options[:prefix]
-            tsquery_sql = connection.quote("'#{tsquery_sql}:*'")
+            tsquery_sql = connection.quote("#{tsquery_sql}:*")
           else
             tsquery_sql = connection.qoute(tsquery_sql)
           end
